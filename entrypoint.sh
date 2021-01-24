@@ -24,7 +24,7 @@ if [ -e "${JAVA_HOME}" ]
     JAVA=${JAVA_HOME}/bin/java
 fi
 
-${JAVA} -Xmx${SUBSONIC_MAX_MEMORY}m \
+exec ${JAVA} -Xmx${SUBSONIC_MAX_MEMORY}m \
   -Dsubsonic.home=${SUBSONIC_HOME} \
   -Dsubsonic.host=${SUBSONIC_HOST} \
   -Dsubsonic.port=${SUBSONIC_PORT} \
