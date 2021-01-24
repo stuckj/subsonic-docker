@@ -23,7 +23,7 @@ COPY entrypoint.sh /opt/subsonic/entrypoint.sh
 
 WORKDIR /opt/subsonic
 
-VOLUME ["/var/music", "/var/subsonic"]
+VOLUME [ "/var/music", "/var/playlists", "/var/subsonic" ]
 
 EXPOSE 4040/tcp
 
