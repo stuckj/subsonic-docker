@@ -81,4 +81,6 @@ services:
       - /data/subsonic-data:/var/subsonic
 ```
 
+TODO: Change user to non-root!!!
+
 TODO: Setup auto-detection of new versions in Dockerfile (will need to scrape page).
