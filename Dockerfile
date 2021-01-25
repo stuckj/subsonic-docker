@@ -14,7 +14,7 @@ RUN mkdir -p /opt/subsonic \
   && mkdir -p /var/subsonic/transcode \
   && cd /var/subsonic/transcode \
   && ln -s "$(which ffmpeg)" \
-  && ln -s "$(which lame)" \
+  && ln -s "$(which lame)"
 
 RUN wget --no-check-certificate https://s3-eu-west-1.amazonaws.com/subsonic-public/download/subsonic-6.1.6-standalone.tar.gz \
   && tar xvzf subsonic-6.1.6-standalone.tar.gz -C /opt/subsonic \
