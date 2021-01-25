@@ -3,6 +3,8 @@
 This is a simple Docker container for subsonic. You can customize some aspects of subsonic via environment
 variables. See the table below for customization options.
 
+## Environment Variables
+
 | Variable Name                    | Description                                                                                               | Default Value      |
 | :------------------------------- | :-------------------------------------------------------------------------------------------------------- | :----------------- |
 | SUBSONIC_HOME                    | The home directory for subsonic (inside the container).                                                   | /var/subsonic      |
@@ -15,6 +17,8 @@ variables. See the table below for customization options.
 | SUBSONIC_DEFAULT_MUSIC_FOLDER    | The default folder (within the container) for music.                                                      | /var/music         |
 | SUBSONIC_DEFAULT_PODCAST_FOLDER  | The default folder (within the container) for podcasts.                                                   | /var/music/Podcast |
 | SUBSONIC_DEFAULT_PLAYLIST_FOLDER | The default folder (within the container) for playlists.                                                  | /var/playlists     |
+
+## Tracker (MOD, S3M, etc) / MIDI support
 
 The container has ffmpeg, mikmod (for screamtracker modules), timidity (for midi files), and LAME (for encoding screamtracker and midi files to MP3).
 Subsonic is not, by default, configured to use mikmod or timitidy. You must add the configuration. In the transcoding section, add a configuration like
@@ -29,6 +33,8 @@ The `mikmod_stdout` and `timidity_stdout` scripts are simple scripts that run mi
 the output to stdout in wav format for lame to use for encoding. If you have no need to handle tracker or
 midi files than you can safely ignore this configuration.
 
+## Volumes
+
 The container will use volumes for for the following directories within the container:
 
 | Volume Path    | Description |
@@ -36,6 +42,8 @@ The container will use volumes for for the following directories within the cont
 | /var/music     | Path where subsonic will look for music (by default).                 |
 | /var/playlists | Path where subsonic will look for (and store) playlists (by default). |
 | /var/subsonic  | Path where subsonic stores any state and configuration.               |
+
+## Docker run
 
 Here is an example `docker run` command that you can use to run the container:
 
@@ -62,6 +70,8 @@ docker run -it \
     stuckj/subsonic:latest
 ```
 
+## Docker compose
+
 Here is an example `docker-compose.yaml` if you choose to run with docker compose:
 
 ```
@@ -80,6 +90,8 @@ services:
       - /data/playlists:/var/playlists
       - /data/subsonic-data:/var/subsonic
 ```
+
+## TODOs
 
 TODO: Change user to non-root!!!
 
