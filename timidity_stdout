@@ -1,0 +1,3 @@
+#!/bin/bash 
+TIMIDITY=/usr/bin/timidity
+${TIMIDITY} "${1}" -Ow -o - | tee

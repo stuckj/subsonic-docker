@@ -1,0 +1,4 @@
+#!/bin/bash 
+MIKMOD=/usr/local/bin/mikmod
+${MIKMOD} --noloops -X -q -i -hq -su -d 6 -p 0 --norc "${1}" | tee
+#${MIKMOD} -d stdout --noloops -X -q -i --hqmixer --surround --norc "$1" | tee

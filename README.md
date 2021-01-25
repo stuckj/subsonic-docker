@@ -16,6 +16,18 @@ variables. See the table below for customization options.
 | SUBSONIC_DEFAULT_PODCAST_FOLDER  | The default folder (within the container) for podcasts.                                                   | /var/music/Podcast |
 | SUBSONIC_DEFAULT_PLAYLIST_FOLDER | The default folder (within the container) for playlists.                                                  | /var/playlists     |
 
+The container has ffmpeg, mikmod (for screamtracker modules), timidity (for midi files), and LAME (for encoding screamtracker and midi files to MP3).
+Subsonic is not, by default, configured to use mikmod or timitidy. You must add the configuration. In the transcoding section, add a configuration like
+the following for screamtracker / etc files:
+
+| Name               | Convert from                                                               | Convert to | Step 1             | Step 2                                                                  |
+| :----------------- | :------------------------------------------------------------------------- | :--------- | :----------------- | :---------------------------------------------------------------------- |
+| xm, mod, etc > mp3 | xm mod s3m 669 it stm amf dsm far gdm gt2 imf med mtm okt stx ult umx apun | mp3        | mikmod_stdout %s   | lame -r -b %b --tt %t --ta screamtracker --tl %l -S --resample 44.1 - - |
+| mid > mp3          | mid                                                                        | mp3        | timidity_stdout %s | lame - -b 64                                                            |
+
+The `mikmod_stdout` and `timidity_stdout` scripts are simple scripts that run mikmod and timidity sending
+the output to stdout in wav format for lame to use for encoding. If you have no need to handle tracker or
+midi files than you can safely ignore this configuration.
 
 The container will use volumes for for the following directories within the container:
 
