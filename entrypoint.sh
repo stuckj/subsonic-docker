@@ -25,22 +25,12 @@ if [ -e "${JAVA_HOME}" ]; then
 fi
 
 # Make sure all transcoding executables are in /var/subsonic/transcode (subsonic requires this)
-if [ ! -d /var/subsonic/transcode ]; then
-    mkdir -p /var/subsonic/transcode
-    chown subsonic:subsonic /var/subsonic/transcode
-fi
-if [ ! -e /var/subsonic/transcode/ffmpg ]; then
-    ln -sf "$(which ffmpeg)" /var/subsonic/transcode/ffmpeg
-fi
-if [ ! -e /var/subsonic/transcode/lame ]; then
-    ln -sf "$(which lame)" /var/subsonic/transcode/lame
-fi
-if [ ! -f /var/subsonic/transcode/mikmod_stdout ]; then
-    cp /opt/subsonic/mikmod_stdout /var/subsonic/transcode
-fi
-if [ ! -f /var/subsonic/transcode/timidity_stdout ]; then
-    cp /opt/subsonic/timidity_stdout /var/subsonic/transcode
-fi
+mkdir -p /var/subsonic/transcode
+chown subsonic:subsonic /var/subsonic/transcode
+ln -sf "$(which ffmpeg)" /var/subsonic/transcode/ffmpeg
+ln -sf "$(which lame)" /var/subsonic/transcode/lame
+cp /opt/subsonic/mikmod_stdout /var/subsonic/transcode
+cp /opt/subsonic/timidity_stdout /var/subsonic/transcode
 
 # Make sure permissions are correct on /var/subsonic
 chown subsonic:subsonic /var/subsonic
