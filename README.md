@@ -104,4 +104,6 @@ services:
 
 ## TODOs
 
+TODO: Make subsonic use /usr/sbin/nologin for shell. EXPLICITLY set shell in /bin/su command in entrypoint.sh...
+
 TODO: Setup auto-detection of new versions in Dockerfile (will need to scrape page).
