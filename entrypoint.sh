@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 # This is a replacement for subsonic.sh that comes with subsonic as it is not docker friendly
 # This will properly NOT daemonize the java process and will log to stdout / stderr.
 
@@ -18,12 +20,32 @@ SUBSONIC_DEFAULT_PLAYLIST_FOLDER=${SUBSONIC_DEFAULT_PLAYLIST_FOLDER:-/var/playli
 
 # Use JAVA_HOME if set, otherwise assume java is in the path.
 JAVA=java
-if [ -e "${JAVA_HOME}" ]
-    then
+if [ -e "${JAVA_HOME}" ]; then
     JAVA=${JAVA_HOME}/bin/java
 fi
 
-exec ${JAVA} -Xmx${SUBSONIC_MAX_MEMORY}m \
+# Make sure all transcoding executables are in /var/subsonic/transcode (subsonic requires this)
+if [ ! -d /var/subsonic/transcode ]; then
+    mkdir -p /var/subsonic/transcode
+    chown subsonic:subsonic /var/subsonic/transcode
+fi
+if [ ! -e /var/subsonic/transcode/ffmpg ]; then
+    ln -sf "$(which ffmpeg)" /var/subsonic/transcode/ffmpeg
+fi
+if [ ! -e /var/subsonic/transcode/lame ]; then
+    ln -sf "$(which lame)" /var/subsonic/transcode/lame
+fi
+if [ ! -f /var/subsonic/transcode/mikmod_stdout ]; then
+    cp /opt/subsonic/mikmod_stdout /var/subsonic/transcode
+fi
+if [ ! -f /var/subsonic/transcode/timidity_stdout ]; then
+    cp /opt/subsonic/timidity_stdout /var/subsonic/transcode
+fi
+
+# Make sure permissions are correct on /var/subsonic
+chown subsonic:subsonic /var/subsonic
+
+exec /bin/su -c "${JAVA} -Xmx${SUBSONIC_MAX_MEMORY}m \
   -Dsubsonic.home=${SUBSONIC_HOME} \
   -Dsubsonic.host=${SUBSONIC_HOST} \
   -Dsubsonic.port=${SUBSONIC_PORT} \
@@ -35,4 +57,4 @@ exec ${JAVA} -Xmx${SUBSONIC_MAX_MEMORY}m \
   -Dsubsonic.defaultPlaylistFolder=${SUBSONIC_DEFAULT_PLAYLIST_FOLDER} \
   -Djava.awt.headless=true \
   -verbose:gc \
-  -jar subsonic-booter-jar-with-dependencies.jar
+  -jar subsonic-booter-jar-with-dependencies.jar" subsonic

@@ -43,6 +43,17 @@ The container will use volumes for for the following directories within the cont
 | /var/playlists | Path where subsonic will look for (and store) playlists (by default). |
 | /var/subsonic  | Path where subsonic stores any state and configuration.               |
 
+## Permissions
+
+Subsonic will be run by a service user inside the container (subsonic) with UID=1000 and GID=1000. The
+UID / GID are not currently customizable without modifying the Dockerfile. The permissions will be set
+on any directory / volume you map onto `/var/subsonic` so that it is owned by subsonic:subsonic. If you
+are transferring a subsonic installation to this container make sure to change ownership of everything
+under `/var/subsonic` to subsonic:subsonic. You can do this with this command: `chmod -R subsonic:subsonic DIR`
+where `DIR` is the directory you are mapping to `/var/subsonic`.
+
+The permissions on any music, playlist, etc must be at least readable by subsonic:subsonic.
+
 ## Docker run
 
 Here is an example `docker run` command that you can use to run the container:
@@ -92,7 +103,5 @@ services:
 ```
 
 ## TODOs
-
-TODO: Change user to non-root!!!
 
 TODO: Setup auto-detection of new versions in Dockerfile (will need to scrape page).

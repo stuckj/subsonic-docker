@@ -10,20 +10,19 @@ RUN apt update \
   && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /opt/subsonic \
-  && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 \
-  && mkdir -p /var/subsonic/transcode \
-  && cd /var/subsonic/transcode \
-  && ln -s "$(which ffmpeg)" \
-  && ln -s "$(which lame)"
+  && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
 RUN wget --no-check-certificate https://s3-eu-west-1.amazonaws.com/subsonic-public/download/subsonic-6.1.6-standalone.tar.gz \
   && tar xvzf subsonic-6.1.6-standalone.tar.gz -C /opt/subsonic \
   && rm -rf subsonic-6.1.6-standalone.tar.gz
 
-COPY mikmod_stdout /var/subsonic/transcode
-COPY timidity_stdout /var/subsonic/transcode
+COPY mikmod_stdout /opt/subsonic
+COPY timidity_stdout /opt/subsonic
 
 COPY entrypoint.sh /opt/subsonic/entrypoint.sh
+
+RUN groupadd --system --gid 1000 subsonic \
+  && useradd --system --home-dir /var/subsonic --shell /bin/bash --gid 1000 --uid 1000 subsonic
 
 WORKDIR /opt/subsonic
 
