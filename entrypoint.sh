@@ -35,7 +35,7 @@ cp /opt/subsonic/timidity_stdout /var/subsonic/transcode
 # Make sure permissions are correct on /var/subsonic
 chown subsonic:subsonic /var/subsonic
 
-exec /bin/su -c "${JAVA} -Xmx${SUBSONIC_MAX_MEMORY}m \
+exec /bin/su -s /bin/bash -c "${JAVA} -Xmx${SUBSONIC_MAX_MEMORY}m \
   -Dsubsonic.home=${SUBSONIC_HOME} \
   -Dsubsonic.host=${SUBSONIC_HOST} \
   -Dsubsonic.port=${SUBSONIC_PORT} \

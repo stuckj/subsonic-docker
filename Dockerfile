@@ -22,7 +22,7 @@ COPY timidity_stdout /opt/subsonic
 COPY entrypoint.sh /opt/subsonic/entrypoint.sh
 
 RUN groupadd --system --gid 1000 subsonic \
-  && useradd --system --home-dir /var/subsonic --shell /bin/bash --gid 1000 --uid 1000 subsonic
+  && useradd --system --home-dir /var/subsonic --shell /usr/sbin/nologin --gid 1000 --uid 1000 subsonic
 
 WORKDIR /opt/subsonic
 
