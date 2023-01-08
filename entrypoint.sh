@@ -19,9 +19,9 @@ SUBSONIC_DEFAULT_PODCAST_FOLDER=${SUBSONIC_DEFAULT_PODCAST_FOLDER:-/var/music/Po
 SUBSONIC_DEFAULT_PLAYLIST_FOLDER=${SUBSONIC_DEFAULT_PLAYLIST_FOLDER:-/var/playlists}
 
 # Create subsonic user, taking uid, gid and homedir from (Docker) environment
-groupadd --system -o --gid "$SUBSONIC_UID" subsonic && \
+groupadd --system -o --gid "$SUBSONIC_GID" subsonic && \
     useradd --system -o --home-dir "$SUBSONIC_HOME" --shell /usr/sbin/nologin \
-            --gid "$SUBSONIC_UID" --uid "$SUBSONIC_GID" subsonic
+            --gid "$SUBSONIC_GID" --uid "$SUBSONIC_UID" subsonic
 
 # Use JAVA_HOME if set, otherwise assume java is in the path.
 JAVA=java
