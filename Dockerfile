@@ -7,10 +7,10 @@ ENV LANGUAGE en_US:en
 ENV SUBSONIC_UID 1000
 ENV SUBSONIC_GID 1000
 
-RUN apt update \
-  && apt upgrade -y \
-  && apt install -y locales ffmpeg openjdk-8-jre-headless nano flac lame mikmod timidity wget \
-  && apt clean \
+RUN apt-get update \
+  && apt-get upgrade -y \
+  && apt-get install -y locales ffmpeg openjdk-8-jre-headless nano flac lame mikmod timidity wget \
+  && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
