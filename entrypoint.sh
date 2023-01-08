@@ -50,7 +50,7 @@ exec /bin/su -s /bin/bash -c "${JAVA} -Xmx${SUBSONIC_MAX_MEMORY}m \
   -Dsubsonic.port=${SUBSONIC_PORT} \
   -Dsubsonic.httpsPort=${SUBSONIC_HTTPS_PORT} \
   -Dsubsonic.contextPath=${SUBSONIC_CONTEXT_PATH} \
-  -Dsubsonic.db="${SUBSONIC_DB}" \
+  -Dsubsonic.db=\"${SUBSONIC_DB}\" \
   -Dsubsonic.defaultMusicFolder=${SUBSONIC_DEFAULT_MUSIC_FOLDER} \
   -Dsubsonic.defaultPodcastFolder=${SUBSONIC_DEFAULT_PODCAST_FOLDER} \
   -Dsubsonic.defaultPlaylistFolder=${SUBSONIC_DEFAULT_PLAYLIST_FOLDER} \
