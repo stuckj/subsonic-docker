@@ -7,7 +7,8 @@ ENV LANGUAGE en_US:en
 ENV SUBSONIC_UID 1000
 ENV SUBSONIC_GID 1000
 
-RUN apt-get update \
+RUN export DEBIAN_FRONTEND=noninteractive \
+  && apt-get update \
   && apt-get upgrade -y \
   && apt-get install -y locales ffmpeg openjdk-8-jre-headless nano flac lame mikmod timidity wget \
   && apt-get clean \
