@@ -17,6 +17,8 @@ variables. See the table below for customization options.
 | SUBSONIC_DEFAULT_MUSIC_FOLDER    | The default folder (within the container) for music.                                                      | /var/music         |
 | SUBSONIC_DEFAULT_PODCAST_FOLDER  | The default folder (within the container) for podcasts.                                                   | /var/music/Podcast |
 | SUBSONIC_DEFAULT_PLAYLIST_FOLDER | The default folder (within the container) for playlists.                                                  | /var/playlists     |
+| SUBSONIC_UID                     | The numeric user id to use for the subsonic user                                                          | 1000               |
+| SUBSONIC_GID                     | The numeric group id to use for the subsonic user group                                                   | 1000               |
 
 ## Tracker (MOD, S3M, etc) / MIDI support
 
@@ -45,8 +47,8 @@ The container will use volumes for for the following directories within the cont
 
 ## Permissions
 
-Subsonic will be run by a service user inside the container (subsonic) with UID=1000 and GID=1000. The
-UID / GID are not currently customizable without modifying the Dockerfile. The permissions will be set
+Subsonic will be run by a service user inside the container (subsonic) with the UID / GID configured via
+the `SUBSONIC_UID`/`SUBSONIC_GID` environment variables (Default `1000`/`1000`). The permissions will be set
 on any directory / volume you map onto `/var/subsonic` so that it is owned by subsonic:subsonic. If you
 are transferring a subsonic installation to this container make sure to change ownership of everything
 under `/var/subsonic` to subsonic:subsonic. You can do this with this command: `chmod -R subsonic:subsonic DIR`
@@ -74,6 +76,8 @@ docker run -it \
     -p "8080:8080/tcp" \
     -eSUBSONIC_PORT=8080 \
     -eSUBSONIC_MAX_MEMORY=512 \
+    -eSUBSONIC_UID=33 \
+    -eSUBSONIC_GID=33 \
     -v /data/music:/var/music \
     -v /data/playlists:/var/playlists \
     -v /data/subsonic-data:/var/subsonic \
@@ -94,6 +98,8 @@ services:
     environment:
       - SUBSONIC_MAX_MEMORY=512
       - SUBSONIC_PORT=8080
+      - SUBSONIC_UID=33
+      - SUBSONIC_GID=33
     ports:
       - 8080:8080/tcp
     volumes:

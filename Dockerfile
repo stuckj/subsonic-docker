@@ -1,6 +1,9 @@
 FROM ubuntu:latest
 LABEL version="1.0" maintainer="John Stucklen <stuckj@gmail.com>"
 
+ENV SUBSONIC_UID 1000
+ENV SUBSONIC_GID 1000
+
 RUN apt update \
   && apt upgrade -y \
   && apt install -y locales ffmpeg openjdk-8-jre-headless nano flac lame mikmod timidity wget \
@@ -24,9 +27,6 @@ COPY mikmod_stdout /opt/subsonic
 COPY timidity_stdout /opt/subsonic
 
 COPY entrypoint.sh /opt/subsonic/entrypoint.sh
-
-RUN groupadd --system --gid 1000 subsonic \
-  && useradd --system --home-dir /var/subsonic --shell /usr/sbin/nologin --gid 1000 --uid 1000 subsonic
 
 WORKDIR /opt/subsonic
 
