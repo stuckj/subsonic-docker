@@ -1,9 +1,19 @@
 FROM ubuntu:latest
-LABEL version="1.1" maintainer="John Stucklen <stuckj@gmail.com>"
+LABEL version="1.2" maintainer="John Stucklen <stuckj@gmail.com>"
 
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
+ENV SUBSONIC_HOME /var/subsonic
+ENV SUBSONIC_HOST 0.0.0.0
+ENV SUBSONIC_PORT 4040
+ENV SUBSONIC_HTTPS_PORT 0
+ENV SUBSONIC_CONTEXT_PATH /
+ENV SUBSONIC_DB ""
+ENV SUBSONIC_MAX_MEMORY 150
+ENV SUBSONIC_DEFAULT_MUSIC_FOLDER /var/music
+ENV SUBSONIC_DEFAULT_PODCAST_FOLDER /var/music/Podcast
+ENV SUBSONIC_DEFAULT_PLAYLIST_FOLDER /var/playlists
 ENV SUBSONIC_UID 1000
 ENV SUBSONIC_GID 1000
 
@@ -29,8 +39,8 @@ COPY entrypoint.sh /opt/subsonic/entrypoint.sh
 
 WORKDIR /opt/subsonic
 
-VOLUME [ "/var/music", "/var/playlists", "/var/subsonic" ]
+VOLUME $SUBSONIC_DEFAULT_MUSIC_FOLDER $SUBSONIC_DEFAULT_PLAYLIST_FOLDER $SUBSONIC_HOME
 
-EXPOSE 4040/tcp
+EXPOSE $SUBSONIC_PORT/tcp
 
 ENTRYPOINT [ "/opt/subsonic/entrypoint.sh" ]
